@@ -24,6 +24,8 @@
 
    flask run
 
+   
+
 ### 5. Initialization of database::
 
    To initialize the database:
