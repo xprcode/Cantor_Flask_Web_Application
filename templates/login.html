@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+{% block page_body%} 
+
+
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-7"><h2>Log in</h2><br>
+  <div class="col-7">
+  
+      
+  <form method="POST">
+      {{ form.csrf_token }}
+      <div class="mb-3">
+        <label for="inlineFormInputName" class="form-label">{{ form.name.label }}</label>
+        {{ form.name(class_="form-control") }} <br>
+        {{ show_validation_results(form.name) }}
+      </div>
+  
+      <div class="mb-3">
+        <label for="inlineFormInputGroupUsername" class="form-label">{{ form.password.label }}</label>
+        {{ form.password(class_="form-control") }} <br>
+        {{ show_validation_results(form.password) }}
+
+      </div>
+  
+      <div class="mb-3 form-check">
+        <div class="form-check"> 
+          {{ form.remember(class_="form-check-input") }} 
+          <label class="form-check-label" for="autoSizingCheck2"> 
+          {{ form.remember.label }} 
+          </label> 
+
+          </div>
+       <div><br><br>
+      <button type="submit" class="btn btn-primary">Login</button>
+   </div> 
+  </form>
+  </div>
+  </div>
+  <div class="col-1"></div>
+  </div>
+  {% endblock %} 
