@@ -60,7 +60,7 @@ To initialize the database:
 Register a new user, login, and explore the application.
 
 <a name="file-structure"></a>
-### File structure 
+## File structure 
 - app.py: Main application file containing the Flask app and routes.
 - config.cfg: Configuration file for Flask or other configurations.
 - data: Dictionary with database file. 
@@ -70,7 +70,7 @@ Register a new user, login, and explore the application.
 - README.md: Project README file with information about the project, usage, and contributions.
 
 <a name="todo-list"></a>
-### Todo List
+## Todo List
 
 - [x] User registration
 - [x] User login/logout
