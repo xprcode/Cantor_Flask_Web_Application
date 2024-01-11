@@ -33,12 +33,12 @@ The Flask Cantor application provides functionality for user registration, login
 
 ### 1. Clone the repository::
 
-git clone https://github.com/xprcode/Cantor_Flask_Web_Aplication.git
+            git clone https://github.com/xprcode/Cantor_Flask_Web_Aplication.git
 
 ### 2. Create and activate a virtual environment::
 
-virtualenv env -p python3
-source env/Scripts/activate
+            virtualenv env -p python3
+            source env/Scripts/activate
 
 ### 3. Install requirements::
 
