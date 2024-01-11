@@ -9,6 +9,7 @@ This is a Flask Cantor application for managing user registrations, logins, and 
 3. [Usage and installation](#installation)
 4. [File Structure](#file-structure)
 5. [Todo List](#todo-list)
+6. [Technologies and libraries used](#tech)
 
 <a name="introduction"></a>
 ## Introduction
@@ -79,24 +80,21 @@ Register a new user, login, and explore the application.
 - [ ] Implementing user dashboard
 - [ ] Quote function (API)
 
-## Technologies and Libraries Used
+<a name="(#tech)"></a>
+## Technologies and libraries used
 
 The Flask Cantor application is built using the following technologies and libraries:
 
-- **Flask**: A lightweight web application framework for Python.
-- **Flask-Session**: An extension for handling sessions in Flask applications.
-- **Flask-SQLAlchemy**: A Flask extension for SQLAlchemy, a SQL toolkit, and Object-Relational Mapping (ORM) library.
-- **Flask-Login**: Provides user session management for Flask.
-- **Werkzeug**: A utility library for WSGI (Web Server Gateway Interface) applications, used in Flask.
-- **SQLAlchemy**: An SQL toolkit and Object-Relational Mapping (ORM) library for Python.
-- **WTForms**: A library for creating and validating web forms in Flask applications.
-- **Flask-WTF**: An integration of WTForms with Flask.
-- **SQLite**: A C library that provides a lightweight, disk-based database.
-- **Python urllib.parse**: Library for parsing URLs.
-- **Python os.path**: Module for common pathname manipulations.
-- **Jinja2**: A modern and designer-friendly templating engine for Python.
-- **Bootstrap**: A popular CSS framework for building responsive and visually appealing web pages.
-- **jQuery**: A fast, small, and feature-rich JavaScript library.
+- **Flask**: Flask-Session, Flask-SQLAlchemy, Flask-Login, Flask-WTF,
+- **Werkzeug**,
+- **SQLAlchemy**,
+- **WTForms**,
+- **SQLite**,
+- **Python urllib.parse**,
+- **Python os.path**,
+- **Jinja2**,
+- **Bootstrap**,
+- **jQuery**.
 
 
    
