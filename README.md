@@ -65,13 +65,13 @@ Register a new user, login, and explore the application.
 
 
 ### 6. File structure 
-app.py: Main application file containing the Flask app and routes.
-config.cfg: Configuration file for Flask or other configurations.
-data: Dictionary with database file. 
-templates: Directory containing HTML templates for your Flask app.
- modules: Directory for Python modules, such as forms.py.
-venv: Virtual environment directory.
-README.md: Project README file with information about the project, usage, and contributions.
+- app.py: Main application file containing the Flask app and routes.
+- config.cfg: Configuration file for Flask or other configurations.
+- data: Dictionary with database file. 
+- templates: Directory containing HTML templates for your Flask app.
+- modules: Directory for Python modules, such as forms.py.
+- venv: Virtual environment directory.
+- README.md: Project README file with information about the project, usage, and contributions.
 
 ## Todo List
 
