@@ -33,74 +33,45 @@ The Flask Cantor application provides functionality for user registration, login
 
 ### 1. Clone the repository::
 
-      git clone https://github.com/xprcode/Cantor_Flask_Web_Aplication.git
-      cd flask-admin
+git clone https://github.com/xprcode/Cantor_Flask_Web_Aplication.git
 
 ### 2. Create and activate a virtual environment::
 
-      virtualenv env -p python3
-      source env/Scripts/activate
+virtualenv env -p python3
+source env/Scripts/activate
 
 ### 3. Install requirements::
 
-      pip install flask
-                  flask_session
-                  flask_sqlalchemy
-                  flask_login
-                  wtforms
-                  flask_wtf
-                  email_validator
+pip install flask
+            flask_session
+            flask_sqlalchemy
+            flask_login
+            wtforms
+            flask_wtf
+            email_validator
 
 ### 4. Run the aplication
 
-   flask run
-
+flask run
+Open your browser and go to http://localhost:5000.
    
-
 ### 5. Initialization of database::
 
-   To initialize the database:
-   URL/init
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/flask-cantor.git
-Install dependencies:
-
-bash
-Copy code
-pip install -r requirements.txt
-Create a configuration file:
-
-bash
-Copy code
-cp config.example.cfg config.cfg
-Modify config.cfg as needed.
-
-Initialize the database:
-
-bash
-Copy code
-python main.py init
-Usage
-Start the Flask development server:
-
-bash
-Copy code
-python main.py
-Open your browser and go to http://localhost:5000.
+To initialize the database:
+URL/init
 
 Register a new user, login, and explore the application.
 
-File Structure
-main.py: Main application file.
-modules/: Contains form modules (LoginForm, RegistrationForm).
-templates/: HTML templates for rendering pages.
-config.example.cfg: Example configuration file.
-requirements.txt: List of Python
-continue
-md:
+
+
+### 6. File structure 
+app.py: Main application file containing the Flask app and routes.
+config.cfg: Configuration file for Flask or other configurations.
+data: Dictionary with database file. 
+templates: Directory containing HTML templates for your Flask app.
+ modules: Directory for Python modules, such as forms.py.
+venv: Virtual environment directory.
+README.md: Project README file with information about the project, usage, and contributions.
 
 ## Todo List
 
