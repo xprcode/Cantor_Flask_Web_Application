@@ -89,12 +89,10 @@ The Flask Cantor application is built using the following technologies and libra
 - **Werkzeug**,
 - **SQLAlchemy**,
 - **WTForms**,
-- **SQLite**,
 - **Python urllib.parse**,
 - **Python os.path**,
 - **Jinja2**,
 - **Bootstrap**,
-- **jQuery**.
 
 
    
