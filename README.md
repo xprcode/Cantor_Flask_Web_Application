@@ -26,6 +26,7 @@ The Flask Cantor application provides functionality for user registration, login
 - Flask-SQLAlchemy
 - Flask-WTF
 - WTForms
+- Requests
 
 <a name="installation"></a>
 ## Usage and installation
@@ -48,6 +49,7 @@ The Flask Cantor application provides functionality for user registration, login
                         wtforms
                         flask_wtf
                         email_validator
+                        requests
 
 #### 4. Run the aplication
 
