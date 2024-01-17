@@ -80,14 +80,14 @@ Register a new user, login, and explore the application.
 The `User` class represents a user in the application and is used to interact with the database. It is defined as follows:
 
 ### Attributes:
-id: Primary key for the user.
-name: Unique username for the user.
-password: User's password (Note: Storing passwords directly in the database is not recommended in a production environment; consider using password hashing and salting).
-email: User's email address
+- id: Primary key for the user.
+- name: Unique username for the user.
+- password: User's password (Note: Storing passwords directly in the database is not recommended in a production environment; consider using password hashing and salting).
+- email: User's email address
 
 ### Methods:
-repr: Returns a string representation of the user instance.
-get_user_info: Retrieves user information from the database and updates the instance.
+- repr: Returns a string representation of the user instance.
+- get_user_info: Retrieves user information from the database and updates the instance.
 
 <a name="todo-list"></a>
 ## Todo List
