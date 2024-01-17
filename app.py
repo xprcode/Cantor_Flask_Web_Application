@@ -13,7 +13,8 @@ from flask_login import (
     current_user,
 )
 
-from modules import LoginForm, RegistrationForm
+from modules import LoginForm, RegistrationForm, BuyForm
+from helpers import lookup
 
 app = Flask(__name__)
 
@@ -175,10 +176,23 @@ def logout():
 def index():
     return render_template('index.html')
 
-@app.route('/buy')
+@app.route('/buy', methods = ['GET', 'POST'])
 @login_required
 def buy():
-    return render_template('buy.html')
+    """changes from 17.01.2024. in progress. 
+    """
+    form = BuyForm()
+    if form.validate_on_submit():
+        currency = form.currency.data
+        currency = lookup(currency) 
+        if currency:
+            amount = form.amount.data
+            total = amount * currency
+            print(f'{currency} amount" {amount}, total is {total}')
+        else:
+            return 'wrong currency'
+
+    return render_template('buy.html', form=form)
 
 @app.route('/history')
 def history():

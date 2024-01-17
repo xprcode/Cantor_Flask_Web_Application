@@ -1,13 +1,15 @@
 from flask import redirect, render_template, session
 from wtforms import StringField, IntegerField, BooleanField, SelectField, RadioField, DateField, PasswordField, EmailField
 from flask_wtf import FlaskForm 
-from wtforms.validators import DataRequired, ValidationError, Email
+from wtforms.validators import DataRequired, ValidationError, Email, NumberRange
+
 
 
 class LoginForm(FlaskForm):
     name = StringField('Enter you name: ', validators=[DataRequired()])
     password = PasswordField('Enter password: ', validators=[DataRequired()])
     remember = BooleanField('Rememeber me')
+    
 
 class RegistrationForm(FlaskForm):
 
@@ -34,4 +36,11 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Enter password: ', validators=[DataRequired(), my_password_validator])
     re_password = PasswordField('Confirm password: ', validators=[DataRequired()])
     email = EmailField('Enter email: ', validators=[DataRequired(), Email()])
+
+class BuyForm(FlaskForm):
+    currency = StringField('Currency test ', validators=[DataRequired()])
+    amount = IntegerField('Amount: ', validators=[DataRequired(), NumberRange(min=0, max=None)])
+
+
+    
 
