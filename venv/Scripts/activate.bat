@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\piotr\OneDrive\Desktop\VS_PYTHON\Cantor\venv
+set VIRTUAL_ENV=C:\Users\piotr\OneDrive\Desktop\Cantor_Flask_Web_Aplication\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

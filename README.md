@@ -8,9 +8,8 @@ This is a Flask Cantor application for managing user registrations, logins, and 
 2. [Prerequisites](#prerequisites)
 3. [Usage and installation](#installation)
 4. [File Structure](#file-structure)
-5. [Database Structure](#database)
-6. [Todo List](#todo-list)
-7. [Technologies and libraries used](#tech)
+5. [Todo List](#todo-list)
+6. [Technologies and libraries used](#tech)
 
 <a name="introduction"></a>
 ## Introduction
@@ -26,7 +25,6 @@ The Flask Cantor application provides functionality for user registration, login
 - Flask-SQLAlchemy
 - Flask-WTF
 - WTForms
-- Requests
 
 <a name="installation"></a>
 ## Usage and installation
@@ -49,7 +47,6 @@ The Flask Cantor application provides functionality for user registration, login
                         wtforms
                         flask_wtf
                         email_validator
-                        requests
 
 #### 4. Run the aplication
 
@@ -70,33 +67,15 @@ Register a new user, login, and explore the application.
 - data: Dictionary with database file. 
 - templates: Directory containing HTML templates for your Flask app.
 - modules: Directory for Python modules, such as forms.py.
-- helpers: Directory fro Python, contains additional functions.
 - venv: Virtual environment directory.
 - README.md: Project README file with information about the project, usage, and contributions.
-
-<a name="database"></a>
-## Database Structure
-
-### User Class
-
-The `User` class represents a user in the application and is used to interact with the database. It is defined as follows:
-
-### Attributes:
-- id: Primary key for the user.
-- name: Unique username for the user.
-- password: User's password (Note: Storing passwords directly in the database is not recommended in a production environment; consider using password hashing and salting).
-- email: User's email address
-
-### Methods:
-- repr: Returns a string representation of the user instance.
-- get_user_info: Retrieves user information from the database and updates the instance.
 
 <a name="todo-list"></a>
 ## Todo List
 
 - [x] User registration
 - [x] User login/logout
-- [ ] Buying and selling functionality (API - added, SQL) - in progress
+- [ ] Buying and selling functionality (API, SQL)
 - [ ] Viewing transaction history (SQL)
 - [ ] Implementing user dashboard
 - [ ] Quote function (API)
@@ -114,6 +93,6 @@ The Flask Cantor application is built using the following technologies and libra
 - **Python os.path**,
 - **Jinja2**,
 - **Bootstrap**,
-- **JSON**
-- **API**
+
+
    

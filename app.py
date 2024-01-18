@@ -25,6 +25,8 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
+
+
 class User(db.Model, UserMixin):
     """Class representing a user in the application.
 
@@ -40,6 +42,9 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(50))
     email = db.Column(db.String(50))
+    amount_of_pln = db.Column(db.Integer)
+    portfolio = db.relationship('Portfolio', backref='user', lazy='dynamic')
+    history = db.relationship('History', backref='user', lazy='dynamic')
 
     def __repr__(self) -> str:
         return f'User: {self.name}'
@@ -54,6 +59,31 @@ class User(db.Model, UserMixin):
         else:
             self.name = ""
 
+class Portfolio(db.Model): 
+   id = db.Column(db.Integer, primary_key=True) 
+   currency_symbol = db.Column(db.String(3))
+   curremcy_name = db.Column(db.String(30))
+   currency_amount = db.Column(db.Integer)
+   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class History(db.Model): 
+   id = db.Column(db.Integer, primary_key=True) 
+   currency_symbol = db.Column(db.String(3))
+   currency_name = db.Column(db.String(30))
+   currency_amount = db.Column(db.Integer)
+   currency_price = db.Column(db.Integer)
+   date_of_action = db.Column(db.DateTime)
+   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+# def initialize_db():
+#     with app.app_context():
+#         app.app_context().push()
+#         db.create_all()
+#         print("Database initialized")
+# # app.app_context().push()
+# # db.create_all()
+# initialize_db()
 
 @app.route('/init')
 def init():
@@ -156,6 +186,9 @@ def register():
             name=form.name.data,
             password=generate_password_hash(form.password.data),
             email=form.email.data,
+            # give the user 10000 pln. 
+            amount_of_pln = 10000
+            
         )
 
         db.session.add(new_user)
