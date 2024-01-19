@@ -1,5 +1,5 @@
 from urllib.parse import urlparse, urljoin
-from flask import Flask, render_template, url_for, redirect, request, flash
+from flask import Flask, render_template, url_for, redirect, request, flash, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
@@ -62,7 +62,7 @@ class User(db.Model, UserMixin):
 class Portfolio(db.Model): 
    id = db.Column(db.Integer, primary_key=True) 
    currency_symbol = db.Column(db.String(3))
-   curremcy_name = db.Column(db.String(30))
+   currency_name = db.Column(db.String(30))
    currency_amount = db.Column(db.Integer)
    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -75,15 +75,6 @@ class History(db.Model):
    date_of_action = db.Column(db.DateTime)
    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-
-# def initialize_db():
-#     with app.app_context():
-#         app.app_context().push()
-#         db.create_all()
-#         print("Database initialized")
-# # app.app_context().push()
-# # db.create_all()
-# initialize_db()
 
 @app.route('/init')
 def init():
@@ -141,6 +132,7 @@ def login():
         user = User.query.filter(User.name == form.name.data).first()
         # Ensure username exists and password is correct
         if user is not None and check_password_hash(user.password, form.password.data):
+            session['user_id'] = user.id
             login_user(user)
             flash(f'Hi {user.name}, nice to see you!')
             return render_template('index.html')
@@ -212,16 +204,22 @@ def index():
 @app.route('/buy', methods = ['GET', 'POST'])
 @login_required
 def buy():
-    """changes from 17.01.2024. in progress. 
-    """
+    
     form = BuyForm()
+    user_id = session.get('user_id')
+    user = User.query.filter_by(id=user_id).first()
+    
+
     if form.validate_on_submit():
-        currency = form.currency.data
-        currency = lookup(currency) 
-        if currency:
-            amount = form.amount.data
-            total = amount * currency
-            print(f'{currency} amount" {amount}, total is {total}')
+        #NBP API
+        currency_value = lookup(form.currency.data)
+        
+        if currency_value: 
+            purchase_value = form.amount.data * currency_value
+            if purchase_value > user.amount_of_pln:
+                return 'error not enough money'
+            else:
+                return 'purchase ok, new record in DB'
         else:
             return 'wrong currency'
 
