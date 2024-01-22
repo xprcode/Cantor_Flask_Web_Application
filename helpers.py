@@ -15,10 +15,11 @@ def lookup(symbol):
             data = content.json()
             
             currency = data['rates'][0]['mid']
-            
-            return currency
+            currency_name = data['currency']
+
+            return currency, currency_name
     except (ValueError, KeyError, IndexError, requests.exceptions.RequestException, requests.exceptions.HTTPError) as e:
-        return None
+        return None, None 
     
 
 

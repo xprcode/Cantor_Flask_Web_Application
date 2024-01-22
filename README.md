@@ -81,8 +81,8 @@ The `User` class represents a user in the application and is used to interact wi
 
 - [x] User registration
 - [x] User login/logout
-- [ ] Buying and selling functionality (API - added, SQL) - in progress
-- [ ] Buying and selling functionality (API, SQL)
+- [x] Buying functionality 
+- [ ] Selling functionality (API, SQL)
 - [ ] Viewing transaction history (SQL)
 - [ ] Implementing user dashboard
 - [ ] Quote function (API)

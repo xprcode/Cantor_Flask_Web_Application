@@ -15,6 +15,8 @@ from flask_login import (
 
 from modules import LoginForm, RegistrationForm, BuyForm
 from helpers import lookup
+from datetime import date
+
 
 app = Flask(__name__)
 
@@ -42,7 +44,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(50))
     email = db.Column(db.String(50))
-    amount_of_pln = db.Column(db.Integer)
+    amount_of_pln = db.Column(db.Float)
     portfolio = db.relationship('Portfolio', backref='user', lazy='dynamic')
     history = db.relationship('History', backref='user', lazy='dynamic')
 
@@ -208,21 +210,32 @@ def buy():
     form = BuyForm()
     user_id = session.get('user_id')
     user = User.query.filter_by(id=user_id).first()
-    
 
     if form.validate_on_submit():
         #NBP API
-        currency_value = lookup(form.currency.data)
+        currency_value, currency_name = lookup(form.currency.data)
         
         if currency_value: 
             purchase_value = form.amount.data * currency_value
             if purchase_value > user.amount_of_pln:
-                return 'error not enough money'
+                flash("Insufficient funds in the account - transaction canceled")
+                return render_template('buy.html', form=form)
             else:
+
+                user.amount_of_pln = user.amount_of_pln - purchase_value
+                new_portfolio_record = Portfolio(
+                    currency_symbol = form.currency.data,
+                    currency_name = currency_name,
+                    currency_amount = form.amount.data,
+                    user_id = user.id)
+                
+                db.session.add(new_portfolio_record)
+
+                db.session.commit()
                 return 'purchase ok, new record in DB'
         else:
-            return 'wrong currency'
-
+            flash("Wrong currency index - transaction canceled. Please check Standard ISO 4217 currency list")
+            return render_template('buy.html', form=form)
     return render_template('buy.html', form=form)
 
 @app.route('/history')
