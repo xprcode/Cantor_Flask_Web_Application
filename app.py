@@ -27,8 +27,6 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
-
-
 class User(db.Model, UserMixin):
     """Class representing a user in the application.
 

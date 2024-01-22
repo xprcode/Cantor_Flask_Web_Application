@@ -69,12 +69,20 @@ The `User` class represents a user in the application and is used to interact wi
 ### Attributes:
 - id: Primary key for the user.
 - name: Unique username for the user.
-- password: User's password (Note: Storing passwords directly in the database is not recommended in a production environment; consider using password hashing and salting).
+- password: User's password (Note: Storing passwords using password hashing and salting).
 - email: User's email address
+#### Relationships:
+- portfolio: User's currency portfolio records.
+- history: User's transaction history.
 
-### Methods:
-- repr: Returns a string representation of the user instance.
-- get_user_info: Retrieves user information from the database and updates the instance.
+### Portfolio Class
+
+The `Portfolio` class represents the currencies refered amounts which a user has.
+
+### History
+
+The `History` class represents all buy and sell actions made by a customer.
+
 
 <a name="todo-list"></a>
 ## Todo List
