@@ -1,8 +1,8 @@
-from urllib.parse import urlparse, urljoin
-from flask import Flask, render_template, url_for, redirect, request, flash, session
-from flask_session import Session
+from flask import Flask, render_template, url_for, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
+ 
+from wtforms.validators import DataRequired, NumberRange, ValidationError
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import (
     LoginManager,
@@ -10,19 +10,19 @@ from flask_login import (
     login_user,
     logout_user,
     login_required,
-    current_user,
 )
 
-from modules import LoginForm, RegistrationForm, BuyForm
 from helpers import lookup
-from datetime import date
-
+from modules.RegistrationForm import RegistrationForm
+from modules.BuyForm import BuyForm
+from modules.LoginForm import LoginForm
 
 app = Flask(__name__)
 
 app.config.from_pyfile('config.cfg')
 
 db = SQLAlchemy(app)
+
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
@@ -49,15 +49,6 @@ class User(db.Model, UserMixin):
     def __repr__(self) -> str:
         return f'User: {self.name}'
 
-    def get_user_info(self):
-        """Retrieves user information from the database and updates the instance."""
-
-        user = User.query.filter_by(name=self.name).first()
-
-        if user:
-            self.name = user.name
-        else:
-            self.name = ""
 
 class Portfolio(db.Model): 
    id = db.Column(db.Integer, primary_key=True) 
@@ -94,27 +85,10 @@ def init():
 def load_user(id):
     """Load a user by their user ID.
 
-    Args:
-    id (int): The user ID.
-
     Returns:
     User or None: The User object if found, otherwise None.
     """
     return User.query.filter(User.id == id).first()
-
-
-def is_safe_url(target):
-    """Check if the target URL is safe to redirect to.
-
-    Args:
-    target (str): The target URL.
-
-    Returns:
-    bool: True if the URL is safe, False otherwise.
-    """
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
 
 
 @app.route('/login', methods = ['Get', 'POST'])
@@ -206,8 +180,8 @@ def index():
 def buy():
     
     form = BuyForm()
-    user_id = session.get('user_id')
-    user = User.query.filter_by(id=user_id).first()
+    
+    user = load_user(session.get('user_id'))
 
     if form.validate_on_submit():
         #NBP API
