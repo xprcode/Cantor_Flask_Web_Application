@@ -1,9 +1,7 @@
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Flask, render_template, url_for, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
- 
-from wtforms.validators import DataRequired, NumberRange, ValidationError
-from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import (
     LoginManager,
     UserMixin,
