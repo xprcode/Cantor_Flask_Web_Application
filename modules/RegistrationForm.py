@@ -1,12 +1,12 @@
+from flask import Flask
 from wtforms import StringField, PasswordField, EmailField, validators, Form
 from flask_wtf import FlaskForm 
 from wtforms.validators import DataRequired, ValidationError, Email
-from flask_wtf import FlaskForm 
+
 from wtforms import BooleanField, StringField, SelectField, RadioField, PasswordField 
 
 
-from modules.password_validators.password_validators import PasswordValidator, ValidationError
-
+from .password_validators.password_validators import PasswordValidator
 class RegistrationForm(FlaskForm):
 
     def my_username_validator(form, field):
@@ -20,9 +20,9 @@ class RegistrationForm(FlaskForm):
         
         password_to_check = field.data
         password = PasswordValidator(password_to_check)
-        password.is_valid()
-        if password is False:
-            raise ValidationError('wron')
+        message = password.is_valid()
+        if message:
+            raise ValidationError(message)
         
     name = StringField('Enter you name: ', validators=[DataRequired(), my_username_validator])
     password = PasswordField('Enter password: ', validators=[DataRequired(), my_password_validator])

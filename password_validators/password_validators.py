@@ -27,7 +27,8 @@ class Validator(ABC):
     def is_valid(self):
         """Force to impement is_valid method"""
 
-
+class ValidationError(Exception):
+    """Exception for validation errors"""
 
 class LengthValidator(Validator):
     """Checking the length of given text."""
@@ -46,8 +47,8 @@ class LengthValidator(Validator):
         """
         if len(self.text) >= 8:
             return True
-        message = 'Password must contain at least 8 characters. '
-        return message
+
+        raise ValidationError('Password must contain at least 8 characters. ')
 
 class DigitValidator(Validator):
     """Checking presence of at least one digit in a given text."""
@@ -68,9 +69,7 @@ class DigitValidator(Validator):
         if  digit > 0:
             return True
 
-        message = 'Password must contain at least on digit. '
-        return message
-        
+        raise ValidationError('Password must contain at least on digit. ')
 
 class SpecialCharValidator(Validator):
     """Checking presence of at least one special character in a given text."""
@@ -91,9 +90,7 @@ class SpecialCharValidator(Validator):
         if special > 0:
             return True
 
-        message = 'Password must contain at least on special character. '
-        return message
-
+        raise ValidationError('Password must contain at least on special character. ')
 
 class UpperCharValidator(Validator):
     """Checking presence of at least one upper character in a given text."""
@@ -113,9 +110,8 @@ class UpperCharValidator(Validator):
         capital = sum(1 for char in self.text if char.isupper())
         if capital > 0:
             return True
-        
-        message = 'Password must contain at least one capital letter. '
-        return message
+
+        raise ValidationError('Password must contain at least one capital letter. ')
 
 class LowerCharValidator(Validator):
     """Checking presence of at least one lowercase character in a given text."""
@@ -136,8 +132,7 @@ class LowerCharValidator(Validator):
         if lower > 0:
             return True
 
-        message = 'Password must contain at least one lowercase letter. '
-        return message
+        raise ValidationError('Password must contain at least one lowercase letter. ')
 
 class IfPownedValidator(Validator):
     """Connecting with pwnedpassowrds api and checking if password has leaked"""
@@ -160,8 +155,7 @@ class IfPownedValidator(Validator):
         text = my_hash[5:]
         for line in response_from_api.text.splitlines():
             if text in line:
-                message = 'Password has been leaked'
-                return message
+                raise ValidationError('Password has been leaked. ')
 
         return True
 
@@ -188,9 +182,7 @@ class PasswordValidator(Validator):
         """
         for class_name in self.validators:
             validator = class_name(self.password)
-            if validator.is_valid():
-                pass
-            return validator.is_valid()
-        return True
+            if validator.is_valid() is False:
+                return False
 
-        
+        return True

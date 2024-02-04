@@ -10,10 +10,10 @@ from flask_login import (
     login_required,
 )
 
-from helpers import lookup
-from modules.RegistrationForm import RegistrationForm
-from modules.BuyForm import BuyForm
-from modules.LoginForm import LoginForm
+from .helpers import lookup
+from .modules.RegistrationForm import RegistrationForm
+from .modules.BuyForm import BuyForm
+from .modules.LoginForm import LoginForm
 
 app = Flask(__name__)
 
