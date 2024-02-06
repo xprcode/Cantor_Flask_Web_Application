@@ -127,28 +127,18 @@ def buy():
     if form.validate_on_submit():
         #NBP API
         currency_value, currency_name = lookup(form.currency.data)
-        
-        if currency_value: 
-            purchase_value = form.amount.data * currency_value
-            if purchase_value > user.amount_of_pln:
-                flash("Insufficient funds in the account - transaction canceled")
-                return render_template('buy.html', form=form)
-            else:
+        purchase_value = form.amount.data * currency_value
 
-                user.amount_of_pln = user.amount_of_pln - purchase_value
-                new_portfolio_record = Portfolio(
-                    currency_symbol = form.currency.data,
-                    currency_name = currency_name,
-                    currency_amount = form.amount.data,
-                    user_id = user.id)
-                
-                db.session.add(new_portfolio_record)
-
-                db.session.commit()
-                return 'purchase ok, new record in DB'
+        # Chacking if user can aford for the purcahse.
+        if user.checking_if_can_purchase(purchase_value, user):
+            user.purchase(purchase_value, user, form.currency.data, currency_name, form.amount.data)
+            flash(f"You have successfully bought amount: {form.amount.data} of: {currency_name}") 
+            return render_template('index.html', form=form)
         else:
-            flash("Wrong currency index - transaction canceled. Please check Standard ISO 4217 currency list")
-            return render_template('buy.html', form=form)
+            flash("Insufficient funds in the account - transaction canceled")
+            return render_template('buy.html', form=form) 
+        
+           
     return render_template('buy.html', form=form)
 
 @app.route('/history')
