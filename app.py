@@ -93,9 +93,9 @@ def register():
             name=form.name.data,
             password=generate_password_hash(form.password.data),
             email=form.email.data,
-            # give the user 10000 pln. 
+            # give the user 10000 pln.
             amount_of_pln = 10000
-            
+
         )
 
         db.session.add(new_user)
@@ -109,19 +109,48 @@ def register():
 
 @app.route('/logout')
 def logout():
+    """
+    This route logs out the current user by using the `logout_user()` function
+    provided by Flask-Login. 
+
+    Returns:
+    redirect: Redirects the user to the login page ('login' endpoint).
+    """
     logout_user()
     return redirect(url_for('login'))
 
 @app.route('/')
 def index():
+    """
+    This route renders the index.html template.
+
+    Returns:
+    str: Rendered HTML content of the index page.
+    """
     return render_template('index.html')
 
 @app.route('/buy', methods = ['GET', 'POST'])
 @login_required
 def buy():
+    """
+    This route allows authenticated users to buy currency. It validates the form input,
+    checks if the user has sufficient funds, and processes the purchase if conditions are met.
     
+    Methods:
+    GET: Displays the buy form.
+    POST: Handles the purchase request.
+
+    Returns:
+    GET: Renders the 'buy.html' template with the buy form.
+    POST: Redirects to the homepage ('index.html') after processing the purchase.
+
+    Form Parameters (POST):
+    - currency: The currency code to buy.
+    - amount: The amount of currency to buy.
+    """
+
     form = BuyForm()
-    
+
     user = load_user(session.get('user_id'))
 
     if form.validate_on_submit():
@@ -132,31 +161,29 @@ def buy():
         # Chacking if user can aford for the purcahse.
         if user.checking_if_can_purchase(purchase_value, user):
             user.purchase(purchase_value, user, form.currency.data, currency_name, form.amount.data)
-            flash(f"You have successfully bought amount: {form.amount.data} of: {currency_name}") 
+            flash(f"You have successfully bought amount: {form.amount.data} of: {currency_name}")
             return render_template('index.html', form=form)
-        else:
-            flash("Insufficient funds in the account - transaction canceled")
-            return render_template('buy.html', form=form) 
-        
-           
+
+        flash("Insufficient funds in the account - transaction canceled")
+
     return render_template('buy.html', form=form)
 
 @app.route('/history')
 def history():
-    return redirect(url_for('not_implemented', message="Function history is not ready yet")) 
+    return redirect(url_for('not_implemented', message="Function history is not ready yet"))
 
 @app.route('/quote')
 def quote():
-    return redirect(url_for('not_implemented', message="Function quote is not ready yet")) 
+    return redirect(url_for('not_implemented', message="Function quote is not ready yet"))
 
 @app.route('/sell')
 @login_required
 def sell():
-    return redirect(url_for('not_implemented', message="Function sell is not ready yet")) 
+    return redirect(url_for('not_implemented', message="Function sell is not ready yet"))
 
-@app.route('/not_implemented/<message>') 
-def not_implemented(message): 
- return '<h1 style="color:red">{}</h1>'.format(message) 
+@app.route('/not_implemented/<message>')
+def not_implemented(message):
+    return '<h1 style="color:red">{}</h1>'.format(message)
 
 if __name__ == '__main__':
     app.run()
