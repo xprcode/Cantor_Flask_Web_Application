@@ -46,18 +46,11 @@ The Flask Cantor application provides functionality for user registration, login
    
 #### 5. Initialization of database::
 To initialize the database:
-            URL/init
+            1. flask db init
+            2. flask db migrate -m "initializing db"
+            3. flask db upgrade
 Register a new user, login, and explore the application.
-<a name="file-structure"></a>
-## File structure 
-- app.py: Main application file containing the Flask app and routes.
-- config.cfg: Configuration file for Flask or other configurations.
-- data: Dictionary with database file. 
-- templates: Directory containing HTML templates for your Flask app.
-- modules: Directory for Python modules, such as forms.py.
-- helpers: Directory fro Python, contains additional functions.
-- venv: Virtual environment directory.
-- README.md: Project README file with information about the project, usage, and contributions.
+
 
 <a name="database"></a>
 ## Database Structure
