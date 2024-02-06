@@ -1,82 +1,25 @@
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import Flask, render_template, url_for, redirect, flash, session
-from flask_sqlalchemy import SQLAlchemy
+from flask import render_template, url_for, redirect, flash, session
 from sqlalchemy import func
 from flask_login import (
     LoginManager,
-    UserMixin,
     login_user,
     logout_user,
     login_required,
 )
 
-from .helpers import lookup
-from .modules.RegistrationForm import RegistrationForm
-from .modules.BuyForm import BuyForm
-from .modules.LoginForm import LoginForm
+from cantor_application.helpers import lookup
+from cantor_application.forms.RegistrationForm import RegistrationForm
+from cantor_application.forms.BuyForm import BuyForm
+from cantor_application.forms.LoginForm import LoginForm
+from cantor_application import app, db
+from cantor_application.history import History
+from cantor_application.user import User
+from cantor_application.portfolio import Portfolio
 
-app = Flask(__name__)
-
-app.config.from_pyfile('config.cfg')
-
-db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-
-class User(db.Model, UserMixin):
-    """Class representing a user in the application.
-
-    Args:
-        db (SQLAlchemy): The SQLAlchemy database object.
-        UserMixin (class): A class providing default implementations for User class.
-
-    Returns:
-        User: An instance of the User class.
-    """
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(50))
-    email = db.Column(db.String(50))
-    amount_of_pln = db.Column(db.Float)
-    portfolio = db.relationship('Portfolio', backref='user', lazy='dynamic')
-    history = db.relationship('History', backref='user', lazy='dynamic')
-
-    def __repr__(self) -> str:
-        return f'User: {self.name}'
-
-
-class Portfolio(db.Model): 
-    id = db.Column(db.Integer, primary_key=True) 
-    currency_symbol = db.Column(db.String(3))
-    currency_name = db.Column(db.String(30))
-    currency_amount = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-class History(db.Model): 
-    id = db.Column(db.Integer, primary_key=True) 
-    currency_symbol = db.Column(db.String(3))
-    currency_name = db.Column(db.String(30))
-    currency_amount = db.Column(db.Integer)
-    currency_price = db.Column(db.Integer)
-    date_of_action = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-
-@app.route('/init')
-def init():
-    """initialazing data base.
-
-    Returns:
-    str, database: this function is initialaizing
-    cantor.db database
-    """
-    app.app_context().push()
-    db.create_all()
-
-    return '<h1>Initial configuration done!</h1>'
 
 
 @login_manager.user_loader
