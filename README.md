@@ -31,12 +31,13 @@ The Flask Cantor application provides functionality for user registration, login
             source env/Scripts/activate
 #### 3. Install requirements::
             pip install flask
-                        flask_session
-                        flask_sqlalchemy
-                        flask_login
+                        flask-session
+                        flask-sqlalchemy
+                        flask-login
                         wtforms
-                        flask_wtf
-                        email_validator
+                        flask-wtf
+                        flask-migrate
+                        email-validator
                         requests
 
 #### 4. Run the aplication
@@ -46,9 +47,9 @@ The Flask Cantor application provides functionality for user registration, login
    
 #### 5. Initialization of database::
 To initialize the database:
-            1. flask db init
-            2. flask db migrate -m "initializing db"
-            3. flask db upgrade
+- flask db init
+- flask db migrate -m "initializing db"
+- flask db upgrade
 Register a new user, login, and explore the application.
 
 
@@ -83,10 +84,8 @@ The `History` class represents all buy and sell actions made by a customer.
 - [x] User registration
 - [x] User login/logout
 - [x] Buying functionality 
-- [ ] Selling functionality (API, SQL)
-- [ ] Viewing transaction history (SQL)
-- [ ] Implementing user dashboard
-- [ ] Quote function (API)
+- [x]Selling functionality 
+- [ ] Viewing transaction history )
 
 
 <a name="(#tech)"></a>

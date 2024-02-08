@@ -1,7 +1,10 @@
 from flask_login import UserMixin
+from datetime import datetime
 
 from cantor_application  import db
 from cantor_application.portfolio import Portfolio
+from cantor_application.history import History
+from cantor_application.helpers import lookup
 
 class User(db.Model, UserMixin):
     """Class representing a user in the application.
@@ -32,10 +35,28 @@ class User(db.Model, UserMixin):
         else:
             return True
         
+    def checking_if_can_sell(self, symbol, amount, user):
+        record = Portfolio.query.filter_by(user_id=user.id, currency_symbol=symbol).first()
+        if record and record.currency_amount >= amount:
+                return True
+    
+    def sell(self, symbol, amount, purchase_value, user):
+        user.amount_of_pln = user.amount_of_pln + purchase_value  
+        record = Portfolio.query.filter_by(user_id=user.id, currency_symbol=symbol).first()
+        
+        if record.currency_amount - amount == 0:
+            db.session.delete(record)
+        else:
+            record.currency_amount = record.currency_amount - amount
+        is_negative = -1   
+        user.adding_hostory_record(symbol, amount, is_negative, user)
+        db.session.commit() 
+
     def purchase(self, purchase_value, user, symbol, currency_name, amount):
         user.amount_of_pln = user.amount_of_pln - purchase_value
-
+        
         existing_portfolio_record = Portfolio.query.filter_by(user_id=user.id, currency_symbol=symbol).first()
+
         if existing_portfolio_record:
             existing_portfolio_record.currency_amount += amount
         else:    
@@ -43,6 +64,33 @@ class User(db.Model, UserMixin):
                 currency_symbol = symbol,
                 currency_name = currency_name,
                 currency_amount = amount,
-                user_id = user.id)
+                user_id = user.id
+                )
             db.session.add(new_portfolio_record)
+        is_negative = 1    
+        user.adding_hostory_record(symbol, amount, is_negative, user)
+
         db.session.commit()
+
+
+    def adding_hostory_record(self, symbol, amount, is_negative, user):
+
+        _, currency_name = lookup(symbol)
+
+        current_datetime = datetime.now().replace(microsecond=0)
+
+        new_history_record = History(
+                currency_symbol = symbol,
+                currency_name = currency_name,
+                currency_amount = amount * is_negative,
+                currency_price = amount,
+                date_of_action = current_datetime,
+                user_id = user.id
+            )
+        
+        print(current_datetime.strftime('%Y-%m-%d %H:%M:%S'))
+        db.session.add(new_history_record)    
+        db.session.commit()
+
+        
+

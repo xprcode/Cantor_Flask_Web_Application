@@ -12,6 +12,7 @@ from cantor_application.helpers import lookup
 from cantor_application.forms.RegistrationForm import RegistrationForm
 from cantor_application.forms.BuyForm import BuyForm
 from cantor_application.forms.LoginForm import LoginForm
+from cantor_application.forms.SellForm import SellForm
 from cantor_application import app, db
 from cantor_application.history import History
 from cantor_application.user import User
@@ -160,7 +161,7 @@ def buy():
 
         # Chacking if user can aford for the purcahse.
         if user.checking_if_can_purchase(purchase_value, user):
-            user.purchase(purchase_value, user, form.currency.data, currency_name, form.amount.data)
+            user.purchase(purchase_value, user, form.currency.data.lower(), currency_name, form.amount.data)
             flash(f"You have successfully bought amount: {form.amount.data} of: {currency_name}")
             return render_template('index.html', form=form)
 
@@ -168,22 +169,39 @@ def buy():
 
     return render_template('buy.html', form=form)
 
-@app.route('/history')
-def history():
-    return redirect(url_for('not_implemented', message="Function history is not ready yet"))
-
-@app.route('/quote')
-def quote():
-    return redirect(url_for('not_implemented', message="Function quote is not ready yet"))
-
-@app.route('/sell')
+@app.route('/sell', methods = ['GET', 'POST'])
 @login_required
 def sell():
-    return redirect(url_for('not_implemented', message="Function sell is not ready yet"))
+#pobieramy wszystkie waluty z portfolio zeby byly na przewijaku do listy.
+        #wrzucamy je do przewijaka
+        #wybór  
+    form = SellForm()
 
-@app.route('/not_implemented/<message>')
-def not_implemented(message):
-    return '<h1 style="color:red">{}</h1>'.format(message)
+    user = load_user(session.get('user_id'))
+    
+    if form.validate_on_submit():
+        
+        if user.checking_if_can_sell(form.currency.data.lower(), form.amount.data, user):
+            
+            #NBP API
+            currency_value, currency_name = lookup(form.currency.data)
+            purchase_value = form.amount.data * currency_value
+            user.sell(form.currency.data.lower(), form.amount.data, purchase_value, user)
+            flash(f"You have successfully sold amount: {form.amount.data} of: {currency_name}")
+            return render_template('index.html', form=form)
+
+        flash("No sufficient amount of currency on your account.")
+     
+    return render_template('sell.html', form=form)
+
+
+@app.route('/history', methods = ['GET'])
+@login_required
+def history():
+
+    return render_template('history.html')
+
+
 
 if __name__ == '__main__':
     app.run()

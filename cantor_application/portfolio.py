@@ -6,3 +6,6 @@ class Portfolio(db.Model):
     currency_name = db.Column(db.String(30))
     currency_amount = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self) -> str:
+        return f'Symbol: {self.currency_symbol}, Amount: {self.currency_amount}'
