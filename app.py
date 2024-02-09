@@ -9,15 +9,14 @@ from flask_login import (
 )
 
 from cantor_application.helpers import lookup
-from cantor_application.forms.RegistrationForm import RegistrationForm
-from cantor_application.forms.BuyForm import BuyForm
-from cantor_application.forms.LoginForm import LoginForm
-from cantor_application.forms.SellForm import SellForm
+from cantor_application.forms.registrationform import RegistrationForm
+from cantor_application.forms.buyform import BuyForm
+from cantor_application.forms.loginform import LoginForm
+from cantor_application.forms.sellform import SellForm
 from cantor_application import app, db
-from cantor_application.history import History
-from cantor_application.user import User
-from cantor_application.portfolio import Portfolio
-
+from cantor_application.models.history import History
+from cantor_application.models.user import User
+from cantor_application.models.portfolio import Portfolio
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -161,7 +160,12 @@ def buy():
 
         # Chacking if user can aford for the purcahse.
         if user.checking_if_can_purchase(purchase_value, user):
-            user.purchase(purchase_value, user, form.currency.data.lower(), currency_name, form.amount.data)
+            user.purchase(
+                purchase_value,
+                user,
+                form.currency.data.lower(),
+                form.amount.data
+                )
             flash(f"You have successfully bought amount: {form.amount.data} of: {currency_name}")
             return render_template('index.html', form=form)
 
@@ -172,17 +176,31 @@ def buy():
 @app.route('/sell', methods = ['GET', 'POST'])
 @login_required
 def sell():
-#pobieramy wszystkie waluty z portfolio zeby byly na przewijaku do listy.
-        #wrzucamy je do przewijaka
-        #wybór  
+    """
+    This route allows authenticated users to sell the currencies from their portfolio. 
+    It validates the form input, checks if the user has sufficient amount of currency in portfolio,
+    and processes the sale if conditions are met.
+    
+    Methods:
+    GET: Displays the sell form.
+    POST: Handles the sell request.
+
+    Returns:
+    GET: Renders the 'sell.html' template with the sell form.
+    POST: Redirects to the homepage ('index.html') after processing the sale.
+
+    Form Parameters (POST):
+    - currency: The currency code to sell.
+    - amount: The amount of currency to sell.
+    """
     form = SellForm()
 
     user = load_user(session.get('user_id'))
-    
+
     if form.validate_on_submit():
-        
+
         if user.checking_if_can_sell(form.currency.data.lower(), form.amount.data, user):
-            
+
             #NBP API
             currency_value, currency_name = lookup(form.currency.data)
             purchase_value = form.amount.data * currency_value
@@ -191,7 +209,7 @@ def sell():
             return render_template('index.html', form=form)
 
         flash("No sufficient amount of currency on your account.")
-     
+
     return render_template('sell.html', form=form)
 
 
