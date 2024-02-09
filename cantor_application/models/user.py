@@ -51,7 +51,7 @@ class User(db.Model, UserMixin):
         """Returns a string representation of the User object."""
         return f'User: {self.name}'
 
-    def checking_if_can_purchase(self, purchase_value, user):
+    def checking_if_can_purchase(self, purchase_value: float, user: 'User'):
         """Checks if the user can afford a purchase.
 
         Args:
@@ -63,7 +63,7 @@ class User(db.Model, UserMixin):
         """
         return purchase_value <= user.amount_of_pln
 
-    def checking_if_can_sell(self, symbol, amount, user):
+    def checking_if_can_sell(self, symbol: str, amount: int, user: 'User'):
         """Checks if the user can sell a certain amount of a currency.
 
         Args:
@@ -77,12 +77,12 @@ class User(db.Model, UserMixin):
         record = Portfolio.query.filter_by(user_id=user.id, currency_symbol=symbol).first()
         return bool(record and record.currency_amount >= amount)
 
-    def sell(self, symbol, amount, purchase_value, user):
+    def sell(self, symbol: str, amount: int, purchase_value: float, user: 'User'):
         """Handles the selling of a currency by the user.
 
         Args:
             symbol (str): The symbol of the currency to sell.
-            amount (float): The amount of currency to sell.
+            amount (int): The amount of currency to sell.
             purchase_value (float): The value of the sale.
             user (User): The user selling the currency.
         """
@@ -97,14 +97,14 @@ class User(db.Model, UserMixin):
         user.adding_hostory_record(symbol, amount, is_negative, user)
         db.session.commit()
 
-    def purchase(self, purchase_value, user, symbol, amount):
+    def purchase(self, purchase_value: float, user: 'User', symbol: str, amount: int):
         """Handles the purchase of a currency by the user.
 
         Args:
             purchase_value (float): The value of the purchase.
             user (User): The user making the purchase.
             symbol (str): The symbol of the currency to purchase.
-            amount (float): The amount of currency to purchase.
+            amount (int): The amount of currency to purchase.
         """
         user.amount_of_pln = user.amount_of_pln - purchase_value
 
@@ -125,12 +125,12 @@ class User(db.Model, UserMixin):
 
         db.session.commit()
 
-    def adding_hostory_record(self, symbol, amount, is_negative, user):
+    def adding_hostory_record(self, symbol: str, amount: int, is_negative: int, user: 'User'):
         """Adds a transaction record to the user's transaction history.
 
         Args:
             symbol (str): The symbol of the currency involved in the transaction.
-            amount (float): The amount of currency involved in the transaction.
+            amount (int): The amount of currency involved in the transaction.
             is_negative (int): Indicator of whether the transaction is negative 
             (sell) or positive (buy).
             user (User): The user involved in the transaction.
