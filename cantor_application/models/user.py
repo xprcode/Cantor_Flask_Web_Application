@@ -35,7 +35,7 @@ class User(db.Model, UserMixin):
         checking_if_can_sell: Checks if the user can sell a certain amount of a cryptocurrency.
         sell: Handles the selling of a cryptocurrency by the user.
         purchase: Handles the purchase of a cryptocurrency by the user.
-        adding_hostory_record: Adds a transaction record to the user's transaction history.
+        adding_history_record: Adds a transaction record to the user's transaction history.
 
     """
 
@@ -94,7 +94,7 @@ class User(db.Model, UserMixin):
         else:
             record.currency_amount = record.currency_amount - amount
         is_negative = -1
-        user.adding_hostory_record(symbol, amount, is_negative, user)
+        user.adding_history_record(symbol, amount, is_negative, user)
         db.session.commit()
 
     def purchase(self, purchase_value: float, user: 'User', symbol: str, amount: int):
@@ -121,11 +121,11 @@ class User(db.Model, UserMixin):
                 )
             db.session.add(new_portfolio_record)
         is_negative = 1
-        user.adding_hostory_record(symbol, amount, is_negative, user)
+        user.adding_history_record(symbol, amount, is_negative, user)
 
         db.session.commit()
 
-    def adding_hostory_record(self, symbol: str, amount: int, is_negative: int, user: 'User'):
+    def adding_history_record(self, symbol: str, amount: int, is_negative: int, user: 'User'):
         """Adds a transaction record to the user's transaction history.
 
         Args:

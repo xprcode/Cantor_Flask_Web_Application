@@ -39,6 +39,7 @@ The Flask Cantor application provides functionality for user registration, login
                         flask-migrate
                         email-validator
                         requests
+                        python-dotenv
 
 #### 4. Run the aplication
 
