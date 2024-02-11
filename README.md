@@ -21,6 +21,8 @@ The Flask Cantor application provides functionality for user registration, login
 - Flask-WTF
 - WTForms
 - Requests
+- Flask-Migration
+- Python-Dotenv
  
 <a name="installation"></a>
 ## Usage and installation
@@ -85,8 +87,8 @@ The `History` class represents all buy and sell actions made by a customer.
 - [x] User registration
 - [x] User login/logout
 - [x] Buying functionality 
-- [x]Selling functionality 
-- [ ] Viewing transaction history )
+- [x] Selling functionality 
+- [ ] Viewing transaction history (in progress)
 
 
 <a name="(#tech)"></a>
