@@ -6,12 +6,13 @@ This is a Flask Cantor application for managing user registrations, logins, and 
 3. [Usage and installation](#installation)
 4. [File Structure](#file-structure)
 5. [Database Structure](#database)
-6. [Todo List](#todo-list)
-7. [Technologies and libraries used](#tech)
+6. [Technologies and libraries used](#tech)
 
 <a name="introduction"></a>
+
 ## Introduction
-The Flask Cantor application provides functionality for user registration, login, buying, selling, and viewing transaction history. It uses Flask for web development, SQLAlchemy for database interaction, and Flask-Login for user authentication.
+The Flask Cantor application provides functionality for user registration, login, buying, selling, and viewing transaction history. It uses Flask for web development, SQLAlchemy for database interaction, and Flask-Login for user authentication.  Upon registration, users receive 10,000 PLN to explore the functionality of the platform. Main content (buy, sell, history) are allowed for the users who are logged in. Application is simulating the transaction with connection to NBP Web API. Transaction History: You can check your past transactions for better financial management in history template.
+
 <a name="prerequisites"></a>
 ## Prerequisites
 - Python 3
@@ -77,16 +78,6 @@ The `Portfolio` class represents the currencies refered amounts which a user has
 ### History
 
 The `History` class represents all buy and sell actions made by a customer.
-
-
-<a name="todo-list"></a>
-## Todo List
-
-- [x] User registration
-- [x] User login/logout
-- [x] Buying functionality 
-- [x]Selling functionality 
-- [ ] Viewing transaction history )
 
 
 <a name="(#tech)"></a>
