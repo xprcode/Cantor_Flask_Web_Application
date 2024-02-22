@@ -82,7 +82,6 @@ The `Portfolio` class represents the currencies refered amounts which a user has
 The `History` class represents all buy and sell actions made by a customer.
 
 
-<<<<<<< HEAD
 <a name="todo-list"></a>
 ## Todo List
 
@@ -90,11 +89,9 @@ The `History` class represents all buy and sell actions made by a customer.
 - [x] User login/logout
 - [x] Buying functionality 
 - [x] Selling functionality 
-- [ ] Viewing transaction history (in progress)
+- [x] Viewing transaction history (in progress)
 
 
-=======
->>>>>>> Feature/history
 <a name="(#tech)"></a>
 ## Technologies and libraries used
 
