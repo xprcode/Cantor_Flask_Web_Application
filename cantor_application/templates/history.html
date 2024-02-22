@@ -1,0 +1,27 @@
+{% extends "base.html" %} 
+{% block page_body%} 
+<main class="container py-5 text-center">
+   <table class="table">
+      <thead>
+         <tr>
+            <th class="text-start">Symbol</th>
+            <th class="text-end">Currency Name</th>
+            <th class="text-end">Transaction Amount/</th>
+            <th class="text-end">Crrency Rate (PLN)</th>
+            <th class="text-end">Date of Transaction</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for history in history %}
+         <tr>
+            <td class="text-start">{{ history["currency_symbol"] }}</td>
+            <td class="text-end">{{ history["currency_name"] }}</td>
+            <td class="text-end">{{ history["currency_amount"] }}</td>
+            <td class="text-end">{{ history["currency_price"] }}</td>
+            <td class="text-end">{{ history["date_of_action"] }}</td>
+         </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+</main>
+{% endblock %}

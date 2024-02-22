@@ -1,0 +1,9 @@
+/* index text conainer */
+.container_index {
+    margin-top: 20px;
+    margin-left: 300px;
+    margin-right: 300px;
+    float: left;
+    float: right;
+    margin-bottom: 100px;
+  }

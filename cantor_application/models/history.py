@@ -29,4 +29,5 @@ class History(db.Model):
     currency_price = db.Column(db.Integer)
     date_of_action = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    
+
+   

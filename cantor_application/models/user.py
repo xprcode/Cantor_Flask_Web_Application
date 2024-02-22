@@ -8,8 +8,9 @@ of a currency, handling purchases, sales, and adding transaction records
 to the user's transaction history.
 
 """
-from datetime import datetime
+
 from flask_login import UserMixin
+import datetime
 
 from cantor_application  import db
 from cantor_application.models.portfolio import Portfolio
@@ -135,19 +136,17 @@ class User(db.Model, UserMixin):
             (sell) or positive (buy).
             user (User): The user involved in the transaction.
         """
-        _, currency_name = lookup(symbol)
+        currency_value, currency_name = lookup(symbol)
 
-        current_datetime = datetime.now().replace(microsecond=0)
-
+        date_of_action = datetime.datetime.now().replace(microsecond=0)
+        
         new_history_record = History(
                 currency_symbol = symbol,
                 currency_name = currency_name,
                 currency_amount = amount * is_negative,
-                currency_price = amount,
-                date_of_action = current_datetime,
-                user_id = user.id
-            )
-
-        #print(current_datetime.strftime('%Y-%m-%d %H:%M:%S'))
+                currency_price = currency_value,
+                date_of_action = date_of_action,
+                user_id = user.id)
+        
         db.session.add(new_history_record)
         db.session.commit()

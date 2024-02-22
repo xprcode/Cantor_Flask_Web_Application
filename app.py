@@ -173,6 +173,7 @@ def buy():
 
     return render_template('buy.html', form=form)
 
+
 @app.route('/sell', methods = ['GET', 'POST'])
 @login_required
 def sell():
@@ -216,9 +217,17 @@ def sell():
 @app.route('/history', methods = ['GET'])
 @login_required
 def history():
+    """
+    This route retrieves all transaction history records associated with the logged-in user
+    and renders the 'history.html' template, passing the retrieved history records to the template.
 
-    return render_template('history.html')
+    Returns:
+    str: Rendered HTML content of the 'history.html' template, displaying the transaction history.
+    """
+    user = load_user(session.get('user_id'))
+    total_history = History.query.filter_by(user_id=user.id).all()
 
+    return render_template('history.html', history=total_history)
 
 
 if __name__ == '__main__':

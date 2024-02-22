@@ -1,7 +1,7 @@
 from requests import get
 import requests
 
-def lookup(symbol):
+def lookup(symbol: str):
     """ This function queries the NBP (National Bank of Poland) Web API to retrieve the
         exchange rate for the specified currency symbol.
 
