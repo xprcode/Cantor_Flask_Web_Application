@@ -28,7 +28,7 @@
               Logout {{ session['user'] if 'user' in session }}</a> 
            </li>
            <li class="nav-item"> 
-              <a class="nav-link {{ 'active' if active_menu=='register' }}" href="{{ url_for('register') }}" 
+              <a class="nav-link {{ 'active' if active_menu=='register' }}" href="{{ url_for('register.register') }}" 
                  tabindex="-1">Register</a> 
            </li>
         </ul>
