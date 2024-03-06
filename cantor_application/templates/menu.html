@@ -19,11 +19,11 @@
                  tabindex="-1">Sell</a> 
            </li>
            <li class="nav-item"> 
-              <a class="nav-link {{ 'active' if active_menu=='login' }}" href="{{ url_for('login') }}" 
+              <a class="nav-link {{ 'active' if active_menu=='login' }}" href="{{ url_for('login.login') }}" 
                  tabindex="-1">Login</a> 
            </li>
            <li class="nav-item"> 
-              <a class="nav-link {{ 'active' if active_menu=='logout' }}" href="{{ url_for('logout') }}" 
+              <a class="nav-link {{ 'active' if active_menu=='logout' }}" href="{{ url_for('logout.logout') }}" 
                  tabindex="-1"> 
               Logout {{ session['user'] if 'user' in session }}</a> 
            </li>
