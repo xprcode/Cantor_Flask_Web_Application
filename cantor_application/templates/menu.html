@@ -7,7 +7,7 @@
      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
            <li class="nav-item"> 
-              <a class="nav-link {{ 'active' if active_menu=='history' }}" href="{{ url_for('history') }}" 
+              <a class="nav-link {{ 'active' if active_menu=='history' }}" href="{{ url_for('history.history') }}" 
                  tabindex="-1">History</a> 
            </li>
            <li class="nav-item"> 
@@ -15,7 +15,7 @@
                  tabindex="-1">Buy</a> 
            </li>
            <li class="nav-item"> 
-              <a class="nav-link {{ 'active' if active_menu=='sell  ' }}" href="{{ url_for('sell') }}" 
+              <a class="nav-link {{ 'active' if active_menu=='sell  ' }}" href="{{ url_for('sell.sell') }}" 
                  tabindex="-1">Sell</a> 
            </li>
            <li class="nav-item"> 
