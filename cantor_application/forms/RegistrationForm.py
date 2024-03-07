@@ -52,12 +52,12 @@ class RegistrationForm(FlaskForm):
         """
         password_to_check = field.data
         password = PasswordValidator(password_to_check)
-        message = password.is_valid()
-
-        if message and isinstance(message, str):
-            raise ValidationError(message)
+        if password.is_valid():
+            raise ValidationError((password.is_valid()))
+        
 
     name = StringField('Enter you name: ', validators=[DataRequired(), my_username_validator])
     password = PasswordField('Enter password: ', validators=[DataRequired(), my_password_validator])
     re_password = PasswordField('Confirm password: ', validators=[DataRequired()])
     email = EmailField('Enter email: ', validators=[DataRequired(), Email()])
+    

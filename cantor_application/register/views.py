@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash
 registration_blueprint = Blueprint('register',__name__, template_folder='templates')
 
 
-@registration_blueprint .route("/register", methods=["GET", "POST"])
+@registration_blueprint.route("/register", methods=["GET", "POST"])
 def register():
     """Registering user and adding to database.
 

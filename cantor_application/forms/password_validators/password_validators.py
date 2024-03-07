@@ -45,7 +45,7 @@ class LengthValidator(Validator):
             bool: lenght is correct.
         """
         if len(self.text) >= 8:
-            return True
+            return False
         message = 'Password must contain at least 8 characters. '
         return message
 
@@ -66,7 +66,7 @@ class DigitValidator(Validator):
         """
         digit = sum(1 for char in self.text if char.isdigit())
         if  digit > 0:
-            return True
+            return False
 
         message = 'Password must contain at least on digit. '
         return message
@@ -89,7 +89,7 @@ class SpecialCharValidator(Validator):
         """
         special = sum(1 for char in self.text if char.isascii() and not char.isalnum())
         if special > 0:
-            return True
+            return False
 
         message = 'Password must contain at least on special character. '
         return message
@@ -112,7 +112,7 @@ class UpperCharValidator(Validator):
         """
         capital = sum(1 for char in self.text if char.isupper())
         if capital > 0:
-            return True
+            return False
         
         message = 'Password must contain at least one capital letter. '
         return message
@@ -134,7 +134,7 @@ class LowerCharValidator(Validator):
         """
         lower = sum(1 for char in self.text if char.islower())
         if lower > 0:
-            return True
+            return False
 
         message = 'Password must contain at least one lowercase letter. '
         return message
@@ -163,7 +163,7 @@ class IfPownedValidator(Validator):
                 message = 'Password has been leaked'
                 return message
 
-        return True
+        return False
 
 
 class PasswordValidator(Validator):
@@ -189,8 +189,5 @@ class PasswordValidator(Validator):
         for class_name in self.validators:
             validator = class_name(self.password)
             if validator.is_valid():
-                pass
-            return validator.is_valid()
-        return None
-
-        
+                return(validator.is_valid())
+        return False

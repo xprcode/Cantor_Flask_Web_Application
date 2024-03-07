@@ -1,13 +1,15 @@
 from flask import Blueprint, render_template, flash, session
 from flask_login import login_user
 from werkzeug.security import check_password_hash
-
+from flask_login import LoginManager
 from cantor_application import db
 from cantor_application.models.user import User
 from cantor_application.forms.loginform import LoginForm
-
+from cantor_application import app
 login_blueprint = Blueprint('login',__name__, template_folder='templates')
 
+login_manager = LoginManager(app)
+login_manager.login_view = 'login.login'
 
 @login_blueprint.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -29,3 +31,12 @@ def login():
             flash(f'Hi {user.name}, nice to see you!')
             return render_template('index.html')
     return render_template('login.html', form=form)
+
+@login_manager.user_loader
+def load_user(id):
+    """Load a user by their user ID.
+
+    Returns:
+    User or None: The User object if found, otherwise None.
+    """
+    return User.query.filter(User.id == id).first()

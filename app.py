@@ -1,31 +1,21 @@
-from flask import render_template, url_for, redirect, flash, session
-from sqlalchemy import func
+from flask import render_template,  flash, session
+
 from flask_login import (
-    LoginManager,
     login_required,
 )
 
 from cantor_application.helpers import lookup
-from cantor_application.forms.registrationform import RegistrationForm
-from cantor_application.forms.buyform import BuyForm
+from cantor_application.login.views import load_user
 from cantor_application.forms.sellform import SellForm
 from cantor_application import app, db
 from cantor_application.models.history import History
 from cantor_application.models.user import User
 from cantor_application.models.portfolio import Portfolio
 
-login_manager = LoginManager(app)
-login_manager.login_view = 'login.login'
 
 
-@login_manager.user_loader
-def load_user(id):
-    """Load a user by their user ID.
 
-    Returns:
-    User or None: The User object if found, otherwise None.
-    """
-    return User.query.filter(User.id == id).first()
+
 
 @app.route('/')
 def index():
@@ -36,51 +26,6 @@ def index():
     str: Rendered HTML content of the index page.
     """
     return render_template('index.html')
-
-
-@app.route('/buy', methods = ['GET', 'POST'])
-@login_required
-def buy():
-    """
-    This route allows authenticated users to buy currency. It validates the form input,
-    checks if the user has sufficient funds, and processes the purchase if conditions are met.
-    
-    Methods:
-    GET: Displays the buy form.
-    POST: Handles the purchase request.
-
-    Returns:
-    GET: Renders the 'buy.html' template with the buy form.
-    POST: Redirects to the homepage ('index.html') after processing the purchase.
-
-    Form Parameters (POST):
-    - currency: The currency code to buy.
-    - amount: The amount of currency to buy.
-    """
-
-    form = BuyForm()
-
-    user = load_user(session.get('user_id'))
-
-    if form.validate_on_submit():
-        #NBP API
-        currency_value, currency_name = lookup(form.currency.data)
-        purchase_value = form.amount.data * currency_value
-
-        # Chacking if user can aford for the purcahse.
-        if user.checking_if_can_purchase(purchase_value, user):
-            user.purchase(
-                purchase_value,
-                user,
-                form.currency.data.lower(),
-                form.amount.data
-                )
-            flash(f"You have successfully bought amount: {form.amount.data} of: {currency_name}")
-            return render_template('index.html', form=form)
-
-        flash("Insufficient funds in the account - transaction canceled")
-
-    return render_template('buy.html', form=form)
 
 
 @app.route('/sell', methods = ['GET', 'POST'])

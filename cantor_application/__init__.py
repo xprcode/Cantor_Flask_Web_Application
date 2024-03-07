@@ -21,7 +21,9 @@ Migrate(app,db)
 from cantor_application.login.views import login_blueprint 
 from cantor_application.logout.views import logout_blueprint 
 from cantor_application.register.views import registration_blueprint
+from cantor_application.buy.views import buy_blueprint
 
 app.register_blueprint(login_blueprint)
 app.register_blueprint(logout_blueprint)
 app.register_blueprint(registration_blueprint) 
+app.register_blueprint(buy_blueprint) 
