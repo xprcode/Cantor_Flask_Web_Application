@@ -50,4 +50,3 @@ def buy():
         flash("Insufficient funds in the account - transaction canceled")
 
     return render_template('buy.html', form=form)
-

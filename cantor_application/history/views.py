@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,  session
-from cantor_application.login.views import load_user
 from flask_login import login_required
+from cantor_application.login.views import load_user
 from cantor_application.models.history import History
 
 history_blueprint = Blueprint('history',__name__, template_folder='templates')

@@ -1,14 +1,6 @@
-from flask import render_template,  session
+from flask import render_template
 
-
-
-from cantor_application.helpers import lookup
-
-
-from cantor_application import app, db
-from cantor_application.models.history import History
-from cantor_application.models.user import User
-from cantor_application.models.portfolio import Portfolio
+from cantor_application import app
 
 
 @app.route('/')
@@ -20,10 +12,6 @@ def index():
     str: Rendered HTML content of the index page.
     """
     return render_template('index.html')
-
-
-
-
 
 
 if __name__ == '__main__':

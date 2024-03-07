@@ -1,10 +1,7 @@
 from flask import Blueprint, render_template,  flash, session
-from flask_login import (
-    login_required,
-)
-
-from cantor_application.helpers import lookup
+from flask_login import login_required
 from cantor_application.forms.sellform import SellForm
+from cantor_application.helpers import lookup
 from cantor_application.login.views import load_user
 
 sell_blueprint = Blueprint('sell',__name__, template_folder='templates')

@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, flash, session
-from flask_login import login_user
+from flask_login import login_user, LoginManager
 from werkzeug.security import check_password_hash
-from flask_login import LoginManager
-from cantor_application import db
 from cantor_application.models.user import User
 from cantor_application.forms.loginform import LoginForm
 from cantor_application import app
+
 login_blueprint = Blueprint('login',__name__, template_folder='templates')
 
 login_manager = LoginManager(app)
