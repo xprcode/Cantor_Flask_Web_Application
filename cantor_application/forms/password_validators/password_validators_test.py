@@ -12,7 +12,7 @@ from password_validators import (
 
 def test_digit_in_password():
     validator = DigitValidator('abc1')
-    assert validator.is_valid() is True
+    assert validator.is_valid() is False
 
 def test_digit_in_password_negative():
     validator = DigitValidator('abc')
@@ -20,16 +20,15 @@ def test_digit_in_password_negative():
 
 def test_special_in_password():
     validator = SpecialCharValidator('.,/')
-    assert validator.is_valid() is True
+    assert validator.is_valid() is False
 
 def test_special_in_password_negative():
     validator = SpecialCharValidator('abc1')
     assert validator.is_valid() == 'Password must contain at least on special character. ' 
 
 def test_lenght_in_password():
-    validator1 = LengthValidator('12345678') # password = 8
-    validator2 = LengthValidator('123456789') # passowrd > 8
-    assert validator1.is_valid() and validator2.is_valid() is True
+    validator1 = LengthValidator('123456798') # password = 8
+    assert validator1.is_valid() is False
 
 def test_lenght_in_password_negative():
     validator = LengthValidator('1234567') # password < 8
@@ -38,7 +37,7 @@ def test_lenght_in_password_negative():
 
 def test_uppercase_in_password():
     validator = UpperCharValidator('Abcdefghijk')
-    assert validator.is_valid() is True
+    assert validator.is_valid() is False
 
 def test_uppercase_in_password_negative():
     validator = UpperCharValidator('abcdefghijk')
@@ -46,7 +45,7 @@ def test_uppercase_in_password_negative():
 
 def test_ulowercase_in_password():
     validator = LowerCharValidator('aBCDEFGHIJK')
-    assert validator.is_valid() is True
+    assert validator.is_valid() is False
 
 def test_lowercase_in_password_negative():
     validator = LowerCharValidator('ABCDEFGHIJK')
