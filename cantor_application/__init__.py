@@ -17,8 +17,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = getenv('SQLALCHEMY_TRACK_MODIFICA
 
 db = SQLAlchemy(app)
 Migrate(app,db)
-<<<<<<< HEAD
-=======
 
 from cantor_application.login.views import login_blueprint 
 from cantor_application.logout.views import logout_blueprint 
@@ -33,4 +31,3 @@ app.register_blueprint(registration_blueprint)
 app.register_blueprint(buy_blueprint) 
 app.register_blueprint(sell_blueprint)
 app.register_blueprint(history_blueprint)
->>>>>>> Feature/blue-prints
