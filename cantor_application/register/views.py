@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, flash
 from werkzeug.security import generate_password_hash
 from sqlalchemy import func
 from cantor_application import db
-from cantor_application.forms.registrationform import RegistrationForm
+from cantor_application.forms.registrationfrom import RegistrationForm
 from cantor_application.models.user import User
 
 
